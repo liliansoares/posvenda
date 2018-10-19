@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAGA,AAAA,KAAK,CAAA,AAAA,QAAC,AAAA,EAAU;EACZ,MAAM,EAAE,OAAO;EACf,UAAU,EAAE,IAAI;EAChB,MAAM,EAAE,IAAI;EACZ,cAAc,EAAE,SAAS;EACzB,KAAK,EC0Be,OAAO;CDzB9B",
+    "sources": [
+        "editable-label.component.scss",
+        "../../../assets/sass/_cores.scss"
+    ],
+    "names": [],
+    "file": "editable-label.component.css"
+}

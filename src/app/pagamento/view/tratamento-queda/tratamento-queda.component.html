@@ -1,0 +1,91 @@
+<script type="text/javascript" src="libs/FileSaver/FileSaver.min.js"></script>
+<script type="text/javascript" src="libs/jsPDF/jspdf.min.js"></script>
+<script type="text/javascript" src="libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+<script type="text/javascript" src="tableExport.min.js"></script>
+<!--
+<div *ngIf="!showEdicao">
+  <app-modal></app-modal>
+  <br>
+  <br>
+  <button style="margin-left: 2%;" *ngIf="!mostrarBotao" (click)="voltarMenu()" class="btn btn-warning">
+    <i class="fa fa-sign-out fa-lg"></i>Retornar ao menu</button>
+</div>
+-->
+<!--<div [hidden]="!showEdicao">-->
+  <div [hidden]="false">
+    <h1 style="font-size:3em;">Consulta Tratamento de Queda</h1>
+    <div class="formulario">
+        <form autocomplete="off" class="form-horizontal" [formGroup]="formulario">
+           <div class="form-group">
+              <div class="col-md-4">
+                <label>Filtro de pesquisa</label>
+                <select type="text" class="form-control drop" formControlName="opcao" (change)="selecionaFiltro($event)">
+                  <!--<option [hidden]="value == null" value="null">Selecione um filtro de pesquisa</option>-->
+                  <option value="0">Selecione um filtro de pesquisa</option>
+                  <option value="1">Nome</option>
+                  <option value="2">CPF</option>
+                  <option value="3">CNPJ</option>
+                  <option value="4">Proposta</option>
+                  <option value="5">Produto/Série/Título</option>
+                </select>
+
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-primary" (change)="consultarPagina()" 
+                (click)="consultarChargeback(dataInicio?.value, dataFinal?.value, dataPrevisaoDebitoInicio?.value, dataPrevisaoDebitoFinal?.value, dataDebitoEfetivoInicio?.value, dataDebitoEfetivoFinal?.value)"
+                [disabled]="verificaForm(dataInicio?.value, dataFinal?.value, dataPrevisaoDebitoInicio?.value, dataPrevisaoDebitoFinal?.value, dataDebitoEfetivoInicio?.value, dataDebitoEfetivoFinal?.value)">
+                consultar
+                <i class="fa fa-spinner fa-spin" *ngIf="listando"></i>
+                </button>
+                <button (click)="reset()" class="btn btn-primary">Limpar dados</button>
+              </div>
+           </div>
+           <div *ngIf="exibirCampo(1)" class="form-group">
+            <div  class="col-sm-2">
+                <p> <label for="serie">Nome</label></p>
+                <input type="text" class="form-control" formControlName="nome" placeholder="letras maiúsculas" >
+            </div>
+          </div>
+          <div *ngIf="exibirCampo(2)" class="form-group">
+            <div class="col-sm-4">
+                <p><label for="cpf">CPF</label></p>
+                <input type="text" [textMask]="{mask: maskMask}" id="cpf" class="radio" formControlName="cpf" class="form-control">
+            </div>  
+          </div>
+          <div *ngIf="exibirCampo(3)" class="form-group">
+            <div class="col-sm-4">
+                <p><label for="cnpj">CNPJ</label></p>
+                <input type="text" [textMask]="{mask: maskMask}" id="cnpj" formControlName="cnpj" class="form-control">
+            </div>
+          </div>
+          <div *ngIf="exibirCampo(4)" class="form-group">
+            <div class="col-sm-4">
+                <p><label for="proposta">Proposta</label></p>
+                <input type="text" [textMask]="{mask: maskProposta, guide: false}" class="form-control" formControlName="proposta">
+            </div>
+          </div>
+           <div *ngIf="exibirCampo(5)" class="form-group">
+              <div class="col-sm-4" >
+                <p><label for="plano">Produto</label></p>
+                <select type="text" class="form-control drop" formControlName="plano">
+                  <option (change)="mudaSinal()" value="0">Selecione um produto</option>
+                  <option value="{{item.idPlano}}" *ngFor="let item of planos.lista;">{{item.idPlano}}</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <p>
+                  <label for="serie">Série</label>
+                </p>
+                <input type="text" class="form-control" formControlName="serie" placeholder="letras maiúsculas" [textMask]="{mask: maskSerie}">
+              </div>
+              <div class="form-group">
+                <div class="col-sm-2">
+                  <p><label for="titulo">Título</label></p>
+                  <input type="text" [textMask]="{mask: maskTitulo, guide: false}" class="form-control" formControlName="titulo" id="titulo"
+                    placeholder="Somente números">
+                </div>
+              </div>
+           </div>           
+        </form>
+    </div>
+</div>

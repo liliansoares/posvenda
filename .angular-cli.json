@@ -1,0 +1,81 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+	"name": "cap-financeiro-frontend"
+  },
+  "apps": [
+	{
+	  "root": "src",
+	  "outDir": "dist",
+	  "assets": [
+		"assets",
+		"favicon.ico"
+	  ],
+	  "index": "index.html",
+	  "main": "main.ts",
+	  "polyfills": "polyfills.ts",
+	  "test": "test.ts",
+	  "tsconfig": "tsconfig.app.json",
+	  "testTsconfig": "tsconfig.spec.json",
+	  "prefix": "app",
+	  "styles": [
+		
+		"../node_modules/sweetalert2/dist/sweetalert2.min.css",
+		"../node_modules/bootstrap/dist/css/bootstrap.min.css",
+		"../src/assets/css/main.min.css",
+		"../src/assets/css/tableexport.min.css",
+		"../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+		"../node_modules/toastr/build/toastr.min.css",
+		"../node_modules/font-awesome/css/font-awesome.css"
+	  ],
+	  "scripts": [
+			"../node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js",
+			"../node_modules/sweetalert/dist/sweetalert.min.js",
+			"../node_modules/toastr/build/toastr.min.js",
+			"../node_modules/jspdf/dist/jspdf.min.js"
+			,"../src/assets/js/FileSaver.min.js"
+			,"../src/assets/js/xlsx.core.min.js"
+			,"../src/assets/js/jspdf.plugin.autotable.js"
+			,"../src/assets/js/tableExport.min.js"
+			,"../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+			,"../node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt.min.js"
+			,"../node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"
+		],
+	  "environmentSource": "environments/environment.ts",
+	  "environments": {
+		"local": "environments/environment.ts",
+		"dev": "environments/environment.dev.ts",
+		"qld": "environments/environment.qld.ts",
+		"prd": "environments/environment.prd.ts"
+	  }
+	}
+  ],
+  "e2e": {
+	"protractor": {
+	  "config": "./protractor.conf.js"
+	}
+  },
+  "lint": [
+	{
+	  "project": "src/tsconfig.app.json",
+	  "exclude": "**/node_modules/**"
+	},
+	{
+	  "project": "src/tsconfig.spec.json",
+	  "exclude": "**/node_modules/**"
+	},
+	{
+	  "project": "e2e/tsconfig.e2e.json",
+	  "exclude": "**/node_modules/**"
+	}
+  ],
+  "test": {
+	"karma": {
+	  "config": "./karma.conf.js"
+	}
+  },
+  "defaults": {
+	"styleExt": "css",
+	"component": {}
+  }
+}

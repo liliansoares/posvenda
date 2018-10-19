@@ -1,0 +1,282 @@
+@import 'cores';
+@import 'placeholders';
+@import 'geral';
+
+
+body {
+    background: none;
+}
+
+aside {    
+	position: fixed;
+    z-index: 2;
+	top: 0px;
+	left: 0px;
+    width: 60px;
+	height: 100%;
+    overflow: hidden;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) , url('/assets/img/FundoCor-Produto.jpg') top left no-repeat;
+    transition: all 0.5s;
+
+    /*&:hover {
+        width: $larguraBrnadeja;
+    }*/
+    
+    a.logotipo {
+        display: flex;
+        width: 300px;
+        height: 70px;
+        padding: 15px 10px;
+        margin: 0 0 30px;
+
+        .icone {
+            min-width: 40px;
+            height: 40px;
+            padding: 0px;
+            margin: 0 10px 0 0;
+            border-radius: 5px;
+            background: $cor-padrao-3;
+        }
+        
+        .tipografia {
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+
+            img {
+                height: 100%;
+            }
+        }
+    }
+    
+    .navigation {
+        
+            > ul {
+                width: $larguraBrnadeja;
+                
+                
+            }
+        }
+
+}
+
+header.container-fluid {
+    position: fixed;
+    z-index: 1;
+	top: 0;
+    width: 100%;
+    padding: 0 0 0 60px;
+    border-bottom: 2px solid $cor-padrao-2;
+    background: $branco;
+    
+    .my-row {
+        //display: flex;
+        //align-items: center;
+        >div {
+            height: 80px;
+            line-height: 80px;
+            padding: 0px 10px;
+            
+
+            h1 {
+                margin: 0px;
+                line-height: 80px;
+                padding-left: 20px;
+            }
+        }
+
+        .titulo {
+            width: 100%;
+            padding: 15px 0 15px 30px;
+
+            h1 {
+                margin: 0;
+                margin-bottom: 0px;
+                font-size: 1.8em;
+            }
+        }
+        
+        .usuario {
+            //width: auto;
+            //padding: 15px 30px 15px 10px;
+
+            .dropdown {
+               
+                a.perfil {
+                    display: flex;
+                    align-items: flex-end;
+                    cursor: pointer;
+                    align-items: center;
+
+                    figure {
+                        width: 100%;
+                        max-width: 32px;
+                        @extend %border-radius-padrao-1;
+                        //margin: 5px;
+                        line-height: 50px
+                    }
+
+                    span {
+                        //display: none;
+                        margin: 0 10px 0 0;
+                        white-space: nowrap;
+                        font-size: 1.4em;
+                    }
+                    .username {
+                        //margin: 5px;
+                        margin-left: 5px;
+                    }
+                }
+
+                ul.dropdown-menu {
+                    padding: 0;
+                    margin: -15px 0 0 0;
+                    float: none;
+                    border: none;
+                    //@extend %border-radius-padrao-2;
+                    font-size: unset;
+                    //box-shadow: none;
+                    
+
+                    li {
+
+                        a {
+                            cursor: pointer;
+                            padding: 10px;
+                            font-size: 1.4em;
+                            line-height: 20px;
+                            text-transform: uppercase;
+                            color: $cor-cinza-1;
+                            background: rgba($branco, 0);
+                            transition: all 0.5s;
+
+                            i {
+                                margin: 0 10px 0 0;
+                            }
+
+                            &:hover {
+                                background: rgba($branco, 0.1);
+                            }
+                        }
+
+                        &:hover {
+                            background: $cor-cinza-2
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+main.container-fluid {
+    padding: 100px 0 120px 60px;
+    overflow: hidden;
+}
+
+
+// RESPONSIVIDADE
+
+@media (min-width: 480px) {
+
+    header.container-fluid {
+        
+        .row {
+            
+            .usuario {
+    
+                .dropdown {
+    
+                    a.perfil {
+    
+                        span {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    
+    header.container-fluid {
+        
+        .row {
+            
+            .titulo {
+
+                h1 {
+                    font-size: 3em;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width:991px) {
+    header.container-fluid {
+        .usuario {
+            a.perfil {
+                margin-top: 15px;
+
+                figure {
+                    margin: 0 auto;
+                }
+            }
+        }
+        
+    }
+}
+
+@media (max-width:768px) {
+
+    .txt-title {
+        font-size: 1.6em;
+        padding: 0px 15px;
+        text-align: center;
+        
+    }
+
+    header.container-fluid {
+        padding: 0 0 0 0px;
+
+    }
+
+    main.container-fluid {
+        padding: 100px 0 100px 0px;
+        overflow: hidden;
+    }
+
+    .menu-lateral {
+        width: 300px;
+        left: -300px;
+        
+    }
+    .menu-lateral.aberto {
+        left: 0px;
+    }
+
+    .content {
+        margin-left: 0px;
+    }
+    
+}
+
+#fundo-escuro {
+    width: 100vw;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    position: absolute;
+    z-index: 1;
+    transition: all 0.5s;
+}
+
+#fundo-escuro.aberto {
+    display: block;
+}
+.menu-lateral.aberto {
+    width: 300px !important;
+}

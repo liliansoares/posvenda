@@ -1,0 +1,55 @@
+<!--
+<div class="login container-fluid" >-->
+
+<div class="login container-fluid" >
+
+	<div class="row">
+
+		<div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+			<div class="logotipo">
+				<img src="/assets/svg/icon-financeiro.svg" style="width: 25%;">
+				<img src="/assets/img/financeiro.png" style="width: 65%; margin-left: 5px;">
+			</div>
+
+			<div class="form-group msg-alert">
+				<div class="text-center text-danger" role="alert"></div>
+			</div>
+
+			<form novalidate [formGroup]="loginForm" (keydown)="keyDownFunction($event , usuario )"
+			>
+				<fieldset>
+					
+						<label style="font-weight: 700;
+						color: white;
+						font-family: ubuntu-regular;
+						font-variant: all-petite-caps;
+						font-size: 14px;
+						letter-spacing: 1px;">Usuário</label>
+						<input type="text" class="form-control input-type-text input2"  [value]="usuario.email" style="background: none; 
+						border-bottom: 1px solid #f2d203; border-style: none none solid none" id="email-login" [(ngModel)]="usuario.email" formControlName="email" >
+					
+					<app-input-container class="form-group" errorMessage="Campo obrigatório">
+						<label>Senha</label>
+						<input type="password" class="form-control input-type-password" id="senha-login" style="border-bottom: 1px solid #f2d203"[(ngModel)]="usuario.senha"  formControlName="senha" >
+					</app-input-container>
+
+					<div class="form-group ">
+						<div class="text-center alert alert-danger" role="alert" *ngIf="msg.title">
+								<i class="pull-left fa fa-info-circle" aria-hidden="true"></i> {{ msg.title }}
+						</div>
+					</div>
+					
+					<div class="form-group buttons text-right">
+						<button class="btn btn-link " href="#" style="color:#F2D203">recuperar senha</button>
+						<button class="btn btn-default pull-right botao" [disabled]="loading" style="background-color: #F2D203; color: #826c1b;"(click)="login(usuario)" type="submit">entrar <i class=" fa fa-spinner  fa-spin" *ngIf="loading"></i></button>
+					</div>
+				</fieldset>
+			</form>
+
+		</div>	
+
+	</div>
+	
+</div>
+
+<app-login-footer></app-login-footer>

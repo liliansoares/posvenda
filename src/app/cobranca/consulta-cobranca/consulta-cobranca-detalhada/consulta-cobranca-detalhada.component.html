@@ -1,0 +1,156 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="dataConsulta">Data Consultada</label>
+        </div>
+        <div class="col-sm-2">
+            <label for="parceiro">Parceiro</label>
+        </div>
+        <div class="col-sm-2">
+            <label for="flgExibirDiferencas">Exibir diferenças</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>{{dataConsulta.substr(6,2)}}/{{dataConsulta.substr(4,2)}}/{{dataConsulta.substr(0,4)}}</p>
+        </div>
+        <div class="col-sm-2">
+            <p>{{parceiro == null? 'Não informado' : parceiro}}</p>
+        </div>
+        <div class="col-sm-2">
+            <p class="text-center checkbox-center">
+                <input type="checkbox" id="flgExibirDiferencas" value="s" (click)="exibirDiferencas($event)">
+            </p>
+        </div>
+    </div>
+
+    <div style="text-align: center;" *ngIf="!mostraGridDetalhada && !mostraGridDiferenca">
+        <i style="font-size: 30px; margin-top:150px;" class="fa fa-spinner fa-spin"></i>
+    </div>
+
+    <div *ngIf="mostraGridDetalhada">
+        <div class="row button-group">
+            <div class="col-sm-5">
+                <button class="btn btn-primary" (click)="gerarXls()">Baixar excel</button>
+            </div>
+            <div class="col-sm-5">
+                <button class="btn btn-primary" (click)="gerarPdf()">Baixar pdf</button>
+            </div>
+        </div>
+        <div class="table-config">
+            <table class="table table-hover" id="cobranca-detalhada">
+                <thead>
+                    <tr>
+                        <th scope="col">Evento</th>
+                        <th scope="col">Dt. Prev. liq.</th>
+                        <th scope="col">Data liqui.</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Proposta</th>
+                        <th scope="col">Parcela</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Parceiro</th>
+                        <th scope="col">R.O</th>
+                        <th scope="col">NSU</th>
+                        <th scope="col">Autorização</th>
+                        <th scope="col">Val. parcela</th>
+                        <th scope="col">Taxa Cartão</th>
+                        <th scope="col">Val. líquido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of gridDetalhe.grid; let i = index;">
+                        <td class="box-shadow: bold;" *ngIf="defineEvento(item.evento)">
+                            <p style="cursor: pointer;" data-toggle="tooltip" title="{{item.evento}}">{{evento}}</p>
+                        </td>
+                        <td style="text-align: left;">
+                            {{item.dtPrevistaLiquidacao == null ? ' - ' : item.dtPrevistaLiquidacao.substr(8,2)+'/'+item.dtPrevistaLiquidacao.substr(5,2)+'/'+item.dtPrevistaLiquidacao.substr(0,4)}}
+                        </td>
+                        <td style="text-align: left;">
+                            {{item.dtLiquidacao == null ? ' - ' : item.dtLiquidacao.substr(8,2)+'/'+item.dtLiquidacao.substr(5,2)+'/'+item.dtLiquidacao.substr(0,4)}}
+                        </td>
+                        <td style="text-align: left;">{{item.titulo == null? ' - ' : item.titulo}}</td>
+                        <td style="text-align: left;">{{item.proposta == null? ' - ' : item.proposta}}</td>
+                        <td style="text-align: center;">{{ item.parcela == null ? ' - ' : item.parcela}}</td>
+                        <td style="text-align: left;">{{item.plano == null? ' - ' : item.plano}}</td>
+                        <td style="text-align: left;">{{item.parceiro == null? ' - ' : item.parceiro}}</td>
+                        <td style="text-align: center;">{{item.ro == null ? ' - ' : item.ro}}</td>
+                        <td style="text-align: left;">{{item.nsu == null? ' - ' : item.nsu}}</td>
+                        <td style="text-align: left;">{{item.autorizacao == null? ' - ' : item.autorizacao}}</td>
+                        <td style="text-align: right;">
+                            {{item.valParcela == null? ' - ' : item.valParcela | currency : 'BRL' : 'symbol' : '.2-2' : 'fr'}}
+                        </td>
+                        <td style="text-align: right;">
+                            {{item.txCartao == null? ' - ' : item.txCartao | currency : 'BRL' : 'symbol' : '.2-2' : 'fr'}}
+                        </td>
+                        <td style="text-align: right;">
+                            {{item.valLiquido == null? ' - ' : item.valLiquido | currency : 'BRL' : 'symbol' : '.2-2' : 'fr'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="!mostraGridDetalhada">
+            <div class="row button-group">
+                <div class="col-sm-5">
+                    <button class="btn btn-primary" (click)="gerarXls()">Baixar excel</button>
+                </div>
+                <div class="col-sm-5">
+                    <button class="btn btn-primary" (click)="gerarPdf()">Baixar pdf</button>
+                </div>
+            </div>
+            <div class="table-config">
+                <table class="table table-hover" id="cobranca-detalhada-diferencas">
+                    <thead>
+                        <tr>
+                            <th scope="col">Evento</th>
+                            <th scope="col">Dt. Prev. liq.</th>
+                            <th scope="col">Data liqui.</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Proposta</th>
+                            <th scope="col">Parcela</th>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Parceiro</th>
+                            <th scope="col">R.O</th>
+                            <th scope="col">NSU</th>
+                            <th scope="col">Autorização</th>
+                            <th scope="col">Val. parcela</th>
+                            <th scope="col">Taxa Cartão</th>
+                            <th scope="col">Val. líquido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listaDiferencas; let i = index;">
+                            <td class="box-shadow: bold;" *ngIf="defineEvento(item.evento)">
+                                <p style="cursor: pointer;" data-toggle="tooltip" title="{{item.evento}}">{{evento}}</p>
+                            </td>
+                            <td style="text-align: left;">
+                                {{item.dtPrevistaLiquidacao == null ? ' - ' : item.dtPrevistaLiquidacao.substr(8,2)+'/'+item.dtPrevistaLiquidacao.substr(5,2)+'/'+item.dtPrevistaLiquidacao.substr(0,4)}}
+                            </td>
+                            <td style="text-align: left;">
+                                {{item.dtLiquidacao == null ? ' - ' : item.dtLiquidacao.substr(8,2)+'/'+item.dtLiquidacao.substr(5,2)+'/'+item.dtLiquidacao.substr(0,4)}}
+                            </td>
+                            <td style="text-align: left;">{{item.titulo == null? ' - ' : item.titulo}}</td>
+                            <td style="text-align: left;">{{item.proposta == null? ' - ' : item.proposta}}</td>
+                            <td style="text-align: center;">{{ item.parcela == null ? ' - ' : item.parcela}}</td>
+                            <td style="text-align: left;">{{item.plano == null? ' - ' : item.plano}}</td>
+                            <td style="text-align: left;">{{item.parceiro == null? ' - ' : item.parceiro}}</td>
+                            <td style="text-align: center;">{{item.ro == null ? ' - ' : item.ro}}</td>
+                            <td style="text-align: left;">{{item.nsu == null? ' - ' : item.nsu}}</td>
+                            <td style="text-align: left;">{{item.autorizacao == null? ' - ' : item.autorizacao}}</td>
+                            <td style="text-align: right;">
+                                {{item.valParcela == null? ' - ' : item.valParcela | currency : 'BRL' : 'symbol' : '.2-2' : 'fr'}}
+                            </td>
+                            <td style="text-align: right;">
+                                {{item.txCartao == null? ' - ' : item.txCartao | currency : 'BRL' : 'symbol' : '.2-2' : 'fr'}}
+                            </td>
+                            <td style="text-align: right;">
+                                {{item.valLiquido == null? ' - ' : item.valLiquido | currency : 'BRL' : 'symbol' : '.2-2' : 'fr'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>

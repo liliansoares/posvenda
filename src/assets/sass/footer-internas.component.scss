@@ -1,0 +1,99 @@
+@import '../../assets/sass/cores';
+
+footer {
+	position: fixed;
+	bottom: 0;
+    width: 100%;
+    padding: 0 0 0 60px;
+    background: $cor-cinza-2;
+
+	.row {
+
+		> div {
+			display: flex;
+			align-items: center;
+			padding: 10px 30px 10px;
+			margin: 0 auto;
+			float: none;
+
+			.logotipo {
+				min-width: 80px;
+				margin: 0 20px 0 0;
+
+				svg {
+
+					.shape1 {
+						fill: rgba($preto, 0.25);
+					}
+				}
+			}
+
+			span {
+				font-size: 1em;
+				line-height: normal;
+				color: rgba($preto, 0.5);
+			}
+		}
+	}
+}
+
+
+
+// RESPONSIVIDADE
+
+@media (min-width: 480px) {
+	
+	footer {
+	
+		.row {
+			padding: 0 15px;
+	
+			> div {
+				padding: 20px 30px;
+				
+				.logotipo {
+					min-width: 90px;
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	
+	footer {
+	
+		.row {
+	
+			> div {
+				
+				.logotipo {
+                    min-width: 100px;
+				}
+				
+				span {
+					font-size: 1.1em;
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 1200px) {
+	
+	footer {
+	
+		.row {
+	
+			> div {
+				flex-direction: row;
+				align-items: center;
+				padding: 20px 35px;
+				
+				.logotipo {
+					margin: 0 30px 0 0;
+				}
+			}
+		}
+	}
+}

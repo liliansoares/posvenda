@@ -1,0 +1,401 @@
+<script type="text/javascript" src="libs/FileSaver/FileSaver.min.js"></script>
+<script type="text/javascript" src="libs/jsPDF/jspdf.min.js"></script>
+<script type="text/javascript" src="libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+<script type="text/javascript" src="tableExport.min.js"></script>
+<div *ngIf="!showEdicao">
+  <app-modal></app-modal>
+  <br>
+  <br>
+  <button style="margin-left: 2%;" *ngIf="!mostrarBotao" (click)="voltarMenu()" class="btn btn-warning">
+    <i class="fa fa-sign-out fa-lg"></i>Retornar ao menu</button>
+</div>
+<div [hidden]="obrigatorio == 6 ">
+  <h1 style="font-size:3em;">Consulta Chargeback</h1>
+  <div class="formulario">
+    <form autocomplete="off" class="form-horizontal" [formGroup]="formulario">
+      <div class="form-group">
+        <div class="col-md-4">
+          <label>Filtro de pesquisa</label>
+          <select type="text" class="form-control drop" formControlName="opcao" (change)="mudaFiltros($event)">
+            <!--<option [hidden]="value == null" value="null">Selecione um filtro de pesquisa</option>-->
+            <option value="0">Selecione um filtro de pesquisa</option>
+            <option value="1">Por Data de Recepção de Chargeback</option>
+            <option value="9">Por Data de Previsão de Débito</option>
+            <option value="10">Por Data de Débito Efetivo</option>
+            <option value="2">Por Situação(Status)</option>
+            <option value="3">Por Parcela</option>
+            <option value="4">Por Parceiro</option>
+            <option value="5">Por Proposta</option>
+            <option value="6">Por Produto</option>
+            <option value="7">Por Título</option>
+            <option value="8">Por CPF/CNPJ</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-8" style="text-align: center;">
+          <p>
+            <label class="text-center">
+              Período de recepção de chargeback
+            </label>
+            <b [hidden]="obrigatorio != 6 && obrigatorio != 4 && obrigatorio != 3 && obrigatorio != 2 && obrigatorio != 1" 
+              style="color: #808080;">(Obrigatório)
+            </b>
+          </p>
+        </div>
+      </div>
+      <div class="form-group" appDualDate>
+        <div class="col-sm-4">
+          <input type="text" id="dataInicio" placeholder="DD/MM/AAAA" [textMask]="{mask:dataMask}" #dataInicio name="dataInicio" 
+            class="form-control input-type-text left" formControlName="dataInicio">
+          <span class="upper input-msg">
+            <span *ngIf="dataInicioIsOk == false && dataInicio.value">Data inválida</span>
+          </span>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" id="dataFinal" placeholder="DD/MM/AAAA" [textMask]="{mask:dataMask}" #dataFinal name="dataFinal" 
+            class="form-control input-type-text left" formControlName="dataFinal">
+          <span class="upper input-msg ">
+            <span *ngIf="dataFinalIsOk == false && dataFinal.value">Data inválida</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Novos filtros -->
+      <div class="form-group">
+        <div class="col-sm-8" style="text-align: center;">
+          <p>
+          <label class="text-center">
+            Período de previsão de débito
+          </label>
+          <b [hidden]="obrigatorio != 9" 
+            style="color: #808080;">(Obrigatório)
+          </b>
+          </p>
+        </div>
+        </div>
+        <div class="form-group" appDualDate>
+        <div class="col-sm-4">
+          <input type="text" id="dataPrevisaoDebitoInicio" placeholder="DD/MM/AAAA" [textMask]="{mask:dataMask}" #dataPrevisaoDebitoInicio 
+            name="dataPrevisaoDebitoInicio" class="form-control input-type-text left" formControlName="dataPrevisaoDebitoInicio">
+          <span class="upper input-msg">
+          <span *ngIf="dataPrevisaoDebitoInicioIsOk == false && dataPrevisaoDebitoInicio.value">Data inválida</span>
+          </span>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" id="dataPrevisaoDebitoFinal" placeholder="DD/MM/AAAA" [textMask]="{mask:dataMask}" #dataPrevisaoDebitoFinal 
+            name="dataPrevisaoDebitoFinal" class="form-control input-type-text left" formControlName="dataPrevisaoDebitoFinal">
+          <span class="upper input-msg ">
+          <span *ngIf="dataPrevisaoDebitoFinalIsOk == false && dataPrevisaoDebitoFinal.value">Data inválida</span>
+          </span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="col-sm-8" style="text-align: center;">
+          <p>
+          <label class="text-center">
+            Período de débito efetivo
+          </label>
+          <b [hidden]="obrigatorio != 10" 
+            style="color: #808080;">(Obrigatório)
+          </b>
+          </p>
+        </div>
+        </div>
+        <div class="form-group" appDualDate>
+        <div class="col-sm-4">
+          <input type="text" id="dataDebitoEfetivoInicio" placeholder="DD/MM/AAAA" [textMask]="{mask:dataMask}" #dataDebitoEfetivoInicio 
+            name="dataDebitoEfetivoInicio" class="form-control input-type-text left" formControlName="dataDebitoEfetivoInicio">
+          <span class="upper input-msg">
+          <span *ngIf="dataDebitoEfetivoInicioIsOk == false && dataDebitoEfetivoInicio.value">Data inválida</span>
+          </span>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" id="dataDebitoEfetivoFinal" placeholder="DD/MM/AAAA" [textMask]="{mask:dataMask}" #dataDebitoEfetivoFinal 
+            name="dataDebitoEfetivoFinal" class="form-control input-type-text left" formControlName="dataDebitoEfetivoFinal">
+          <span class="upper input-msg ">
+          <span *ngIf="dataDebitoEfetivoFinalIsOk == false && dataDebitoEfetivoFinal.value">Data inválida</span>
+          </span>
+        </div>
+      </div>       
+      <!-- -->
+
+      <div class="form-group">
+        <div class="col-sm-4" *ngIf="carregaParceiros">
+          <p>
+            <label for="parceiro">Parceiro</label>
+            <b [hidden]="obrigatorio != 5 && obrigatorio != 4" style="color: #808080;">(Obrigatório)</b>
+          </p>
+          <select type="text" class="form-control drop" formControlName="parceiro">
+            <option value="0">Selecione um parceiro</option>
+            <option value="{{item.idProduto}}" *ngFor="let item of parceiro.lista">{{item.idProduto}} - {{item.canal}}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-4">
+          <p>
+            <label for="proposta">Proposta</label>
+            <b [hidden]="obrigatorio != 5" style="color: #808080;"> (Obrigatório)</b>
+          </p>
+          <input type="text" [textMask]="{mask: maskProposta, guide: false}" class="form-control" formControlName="proposta">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-4" *ngIf="carregando">
+          <p>
+            <label for="plano">Produto</label>
+            <b [hidden]="obrigatorio != 7 && obrigatorio != 6 && obrigatorio != 5 " style="color: #808080;">
+            (Obrigatório)</b>
+          </p>
+
+          <select type="text" class="form-control drop" formControlName="plano">
+            <option (change)="mudaSinal()" value="0">Selecione um produto</option>
+            <option value="{{item.idPlano}}" *ngFor="let item of planos.lista;">{{item.idPlano}}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-2">
+          <p>
+            <label for="serie">Série</label>
+            <b [hidden]="obrigatorio != 7" style="color: #808080;"> (Obrigatório)</b>
+          </p>
+          <input type="text" class="form-control" formControlName="serie" placeholder="letras maiúsculas" [textMask]="{mask: maskSerie}">
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-2">
+            <p>
+              <label for="titulo">Título</label>
+              <b [hidden]="obrigatorio != 7" style="color: #808080;"> (Obrigatório)</b>
+            </p>
+            <input type="text" [textMask]="{mask: maskTitulo, guide: false}" class="form-control" formControlName="titulo" id="titulo"
+              placeholder="Somente números">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-2">
+          <p>
+            <label for="opcao">Tipo Pessoa</label>
+            <b [hidden]="obrigatorio != 8 && obrigatorio != 'PF' && obrigatorio != 'PJ'" style="color: #808080;">
+             (Obrigatório)</b>
+          </p>
+        </div>
+        <div class="col-md-1">
+          <label for="pessoa">Física</label>
+          <input type="radio" class="radio" formControlName="tipoPessoa" (click)="evento($event)" value="PF" 
+            (change)="mudaFiltros($event)">
+        </div>
+        <div class="col-md-1">
+          <label for="pessoa">Jurídica</label>
+          <input type="radio" class="radio" formControlName="tipoPessoa" class="radio" (click)="evento($event)" value="PJ"
+            (change)="mudaFiltros($event)">
+        </div>
+
+        <div *ngIf="opcao == 'PF'" [hidden]="opcao == null" class="col-sm-4">
+          <p>
+            <label for="cpf">CPF</label>
+            <b [hidden]="obrigatorio != 8" *ngIf="filtroPessoa == 'PF'" style="color: #808080"> (Obrigatório)</b>
+          </p>
+          <input type="text" [textMask]="{mask: maskMask}" id="cpf" class="radio" formControlName="cpf" class="form-control">
+        </div>
+
+        <div *ngIf="opcao == 'PJ'" [hidden]="opcao == null" class="col-sm-4">
+          <p>
+            <label for="cnpj">CNPJ</label>
+            <b [hidden]="obrigatorio != 8" *ngIf="filtroPessoa == 'PJ'" style="color: #808080"> (Obrigatório)</b>
+          </p>
+          <input type="text" [textMask]="{mask: maskMask}" id="cnpj" formControlName="cnpj" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-4" *ngIf="carregandoStatus">
+          <p>
+            <label for="situacao">Situação</label>
+            <b [hidden]="obrigatorio != 2" style="color: #808080;"> (Obrigatório)</b>
+          </p>
+          <select class="form-control drop" formControlName="situacao">
+            <option value="0">Selecione uma situação...</option>
+            <option value="1">{{situacao.lista[0].descStatusChargeback}}</option>
+            <option value="2">{{situacao.lista[1].descStatusChargeback}}</option>
+            <option value="3">{{situacao.lista[2].descStatusChargeback}}</option>
+            <option value="4">{{situacao.lista[3].descStatusChargeback}}</option>
+            <option value="5">{{situacao.lista[4].descStatusChargeback}}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-4">
+          <p>
+            <label for="parcela">Parcela</label>
+            <b [hidden]="obrigatorio != 3" style="color: #808080;"> (Obrigatório)</b>
+          </p>
+          <input type="text" class="form-control" formControlName="parcela" [textMask]="{mask: maskParcela, guide: false}" 
+            placeholder="somente números">
+        </div>
+      </div>
+
+
+      <div class="row" style="margin-left: 2px;">
+        <button class="btn btn-primary" (change)="consultarPagina()" 
+          (click)="consultarChargeback(dataInicio?.value, dataFinal?.value, dataPrevisaoDebitoInicio?.value, dataPrevisaoDebitoFinal?.value, dataDebitoEfetivoInicio?.value, dataDebitoEfetivoFinal?.value)"
+          [disabled]="verificaForm(dataInicio?.value, dataFinal?.value, dataPrevisaoDebitoInicio?.value, dataPrevisaoDebitoFinal?.value, dataDebitoEfetivoInicio?.value, dataDebitoEfetivoFinal?.value)">
+          consultar chargebacks
+          <i class="fa fa-spinner fa-spin" *ngIf="listando"></i>
+        </button>
+        <button *ngIf=loadDados (click)="reset()" class="btn btn-primary">Limpar dados</button>
+        <button *ngIf=!loadDados (click)="apagar()" class="btn btn-primary">Limpar dados</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="loadDados">
+  <br>
+  <br>
+  <br>
+  <div [hidden]="msg" class="row button-group">
+    <div class="col-sm-5">
+      <button class="btn btn-primary" (click)="gerarXls(dataInicio?.value, dataFinal?.value)">Baixar xls</button>
+    </div>
+    <div class="col-sm-5">
+      <button class="btn btn-primary" (click)="gerarPdf(dataInicio?.value, dataFinal?.value)">Baixar pdf</button>
+    </div>
+  </div>
+  <div class="alert alert-danger" *ngIf="msg">
+    {{ msg }}
+  </div>
+  <table class="table" *ngIf="!msg" id="chargeback-detalhe">
+    <div class="scroolit" [ngStyle]="{'height' : formataTable(grid.gridlist.length)}">
+      <thead>
+        <tr>
+          <th class="table-responsive" scope="col">Criticidade</th>
+          <th scope="col">
+            <p class="posicao">Ações</p>
+          </th>
+          <th scope="col">Dias tratados</th>
+          <th scope="col">Titular</th>
+          <th scope="col">CPF/CNPJ</th>
+          <th scope="col">Parceiro</th>
+          <th scope="col">Produto</th>
+          <th scope="col">Título</th>
+          <th scope="col">Série</th>
+          <th scope="col">Proposta</th>
+          <th scope="col">Nº parcela</th>
+          <th scope="col">Val. Cobrança</th>
+          <th scope="col">Agente</th>
+          <th scope="col">Status título</th>
+          <th scope="col">
+            <p class="posicao-cel-Sorteados">Sorteado</p>
+          </th>
+          <th scope="col">
+            <p class="posicao-cel-Gravame">Gravame</p>
+          </th>
+          <th scope="col">Data transação venda</th>
+          <th scope="col">Nº autorização</th>
+          <th scope="col">
+            <p class="posicao-cel-Nsu">NSU</p>
+          </th>
+          <th scope="col">Data Recep. Chargeback</th>
+          <th scope="col">Data Prev. de Débito</th>
+          <th scope="col">Data Débito EFetivo</th>
+          <th scope="col">Nº Cartão</th>
+          <th scope="col">Status</th>
+          <th scope="col">Motivo Recusa</th>
+          <th scope="col">Motivo Defesa</th>
+          <th scope="col">Data de resposta</th>
+          <th scope="col">Usuário</th>
+          <th scope="col">Data alteração</th>
+          <th scope="col">Valor taxa operadora</th>
+          <th scope="col">Valor Líquido da operadora</th>
+          <th scope="col">
+            <p>Arquivo download</p>
+          </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of grid.gridlist; let myIndex = index">
+          <td>
+            <button [ngStyle]="{ 'background-color' : criticidade(grid.gridlist[myIndex].dataRecepcaoChargeback), 'display' : showCriticidade(item.descStatusChargeback)   }"
+              class="btn btn-default" style="font-size: 18px;">{{diff}}</button>
+          </td>
+          <td>
+            <p class="posicao">
+              <button (click)="mostraEditor(grid.gridlist[myIndex].titular, grid.gridlist[myIndex].cpfCnpj, grid.gridlist[myIndex].statusTitulo, grid.gridlist[myIndex].plano,
+                grid.gridlist[myIndex].serie ,grid.gridlist[myIndex].titulo, grid.gridlist[myIndex].descStatusChargeback,
+                grid.gridlist[myIndex].nsu, grid.gridlist[myIndex].numAutorizacao, grid.gridlist[myIndex].seqPedido)" 
+                [disabled]="item.descStatusChargeback =='Recusado' || item.descStatusChargeback == 'Acatado' || item.descStatusChargeback == 'Expirado'"
+                class="btn btn-primary">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+            </p>
+          </td>
+          <td [ngStyle]="{'display' : showTratamento(item.dataResposta, item.dataRecepcaoChargeback), 'display' : showDiferenca(item.descStatusChargeback)}">
+            {{diferenca_dias == '' || diferenca_dias < 0 || diferenca_dias == null || diferenca_dias == undefined? '  ' : diferenca_dias}}</td>
+          <td style="padding-right: 20px; text-align: left; ">{{item.titular}}</td>
+          <td>{{item.cpfCnpj}}</td>
+          <td>{{item.parceiro}}</td>
+          <td>{{item.plano}}</td>
+          <td>{{item.titulo}}</td>
+          <td>{{item.serie}}</td>
+          <td>{{item.proposta}}</td>
+          <td>{{item.numParcela}}</td>
+          <td>{{item.valCobranca | currency: 'BRL' : true}}</td>
+          <td>{{item.descAgente}}</td>
+          <td>{{item.statusTitulo}}</td>
+          <td>
+            <p class="posicao-cel-Sorteados">{{item.indSorteado}}</p>
+          </td>
+          <td>
+            <p class="posicao-cel-Gravame">{{item.indGravame}}</p>
+          </td>
+          <td>{{item.dataTransacao | date: 'dd/MM/yyyy'}}</td>
+          <td>{{item.numAutorizacao}}</td>
+          <td>
+            <p class="posicao-cel-Nsu">{{item.nsu}}</p>
+          </td>
+          <td>{{item.dataRecepcaoChargeback | date: 'dd/MM/yyyy'}}</td>
+          <td>{{item.dataPrevDebito | date: 'dd/MM/yyyy'}}</td>
+          <td>{{item.dataDebitoEfetivo | date: 'dd/MM/yyyy'}}</td>
+          <td>{{item.numCartaoMascarado}}</td>
+          <td>
+            <p class="status" [ngStyle]="{
+          'background-color': formataStatus(item.descStatusChargeback)
+        }">{{item.descStatusChargeback}}</p>
+          </td>
+          <td style="text-align: left; font-variant: all-petite-caps; font-size: 18px;">{{item.descMotivoRecusa}}</td>
+          <td style="text-align: left;font-variant: all-petite-caps;font-size: 18px;padding-left: 20px;">{{item.descDefesaChargeback}}</td>
+          <td 
+            *ngIf="item.dataResposta == null || item.dataResposta == undefined? 'X' : item.dataResposta">
+            {{item.descStatusChargeback == 'Em análise'? '-' : item.dataResposta | date: 'dd/MM/yyyy'}}
+          </td>
+          <td>{{item.loginUsuario}}</td>
+          <td>{{item.dataAlteracao == null? '  ' : item.dataAlteracao.substr(8,2)+'/'+item.dataAlteracao.substr(5,2)+'/'+item.dataAlteracao.substr(0,4)}}</td>
+          <td>{{item.valTaxaOperadora | currency: 'BRL' : true}}</td>
+          <td>{{item.valLiqOperadora | currency: 'BRL' : true }}</td>
+          <td>
+            <p>
+              <button id="downloader" (click)="downloadArqChargeback(item.seqPedido)" 
+                [ngStyle]="{ 'display': showDownload(item.descStatusChargeback, item.descMotivoRecusa) }"
+                class="btn btn-primary">
+                <span class="glyphicon glyphicon-download"></span>
+              </button>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </div>
+  </table>
+  <br>
+  <br>
+  <br>
+  <div [hidden]="msg">
+    <pagination style="text-align: center; " (goPage)="goToPage($event)" (goNext)="onNext()" (goPrev)="onPrev()" 
+      (goFirst)="onFirst()" (goLast)="onLast()" [pagesToShow]="5" [page]="page" [perPage]="limit" [count]="total">
+    </pagination>
+  </div>
+</div>

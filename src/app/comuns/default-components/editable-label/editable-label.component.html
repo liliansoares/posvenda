@@ -1,0 +1,9 @@
+<input type="text" #inp [value]="value"  [disabled]="!_editModeOn">
+
+<button *ngIf="actionsEnabled" class="btn" (click)="toogleEditMode(inp.value)">
+    <i class="fa" [ngClass]="{'fa-check': _editModeOn , 'fa-edit': !_editModeOn }" ></i>
+</button>
+
+<button *ngIf="actionsEnabled" (click)="delete(value)" class="btn" >
+    <i class=" fa fa-close"></i>
+</button>

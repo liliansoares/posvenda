@@ -1,0 +1,1 @@
+nav ul.pagination li:last-child a{border-radius:0 5px 5px 0}nav ul.pagination li:first-child a{border-radius:5px 0 0 5px}nav{padding:0;margin:0 0 60px}nav ul.pagination{padding:0;margin:0}nav ul.pagination li a{border:none;font-size:1.4em;color:#fff;background-color:#b9672b}nav ul.pagination li a:hover{background-color:#f49b31}

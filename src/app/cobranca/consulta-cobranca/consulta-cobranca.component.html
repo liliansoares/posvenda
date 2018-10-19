@@ -1,0 +1,242 @@
+<div *ngIf="mostrarDetalhes">
+  <h1 style="margin-left: 2%;">Consulta detalhada de cobranças</h1>
+  <button style="margin-left: 2%;" class="btn btn-primary" (click)="mostrarDetalhes = !mostrarDetalhes">Voltar
+    <i class="fa fa-sign-out fa-lg"></i>
+  </button>
+  <app-consulta-cobranca-detalhe></app-consulta-cobranca-detalhe>
+</div>
+
+<div [hidden]="mostrarHistorico" *ngIf="!mostrarDetalhes" class="formulario">
+  <h1>Consulta Cobrança</h1>
+
+  <form autocomplete="off" class="form-horizontal" [formGroup]="formulario">
+
+    <div class="form-group">
+      <div class="col-sm-6" style="text-align: center;">
+        <label for="text-center">Período de consulta de cobrança</label>
+      </div>
+    </div>
+
+    <div class="form-group" appDualDate>
+      <div class="col-sm-3">
+        <input type="text" id="dataInicio" placeholder="DD/MM/AAAA" [textMask]="{mask: dataMask}" #dataInicio name="dataInicio" class="form-control input-type-text left"
+          formControlName="dataInicial" (blur)="verificaDataInicio(dataInicio?.value)">
+        <span class="upper input-msg">
+          <span *ngIf="dataInicioIsOk == false && dataInicio.value">Data Inválida</span>
+        </span>
+      </div>
+      <div class="col-sm-3">
+        <input type="text" id="dataFinal" placeholder="DD/MM/AAAA" [textMask]="{mask: dataMask}" #dataFinal name="dataFinal" class="form-control input-type-text- right"
+          formControlName="dataFinal" (blur)="verificaDataFinal(dataFinal?.value)">
+        <span class="upper input-msg">
+          <span *ngIf="dataFinalIsOk == false && dataFinal.value">Data Inválida</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <div class="col-sm-3">
+        <label for="status">Situação</label>
+        <select (change)="verificaStatusAtual($event)" placeholder="Selecione uma situação..." formControlName="status" class="form-control drop">
+          <option value="0">Selecione uma situação...</option>
+          <option value="C">Concluído</option>
+          <option value="A">Em análise</option>
+          <option value="P">Pendente</option>
+        </select>
+      </div>
+
+      <!-- <div class="col-sm-3">
+        <label for="status">Situação</label>
+        <div class="btn-group">
+          <button type="button" (change)="verificaStatusAtual($event)" formControlName="status" class="btn btn-primary dropdown-toggle" 
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Buscar<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#" value="0">Selecione uma situação...</a></li>
+          <li><a href="#" value="C">Concluído</a></li>
+          <li><a href="#" value="A">Em análise</a></li>
+          <li><a href="#" value="P">Pendente</a></li>
+        </ul>
+        </div>
+      </div> -->
+
+      <div class="col-sm-3" *ngIf="carregaParceiros">
+        <label for="parceiro">Parceiro</label>
+        <select formControlName="parceiro" placeholder="Selecione um parceiro..." class="form-control drop">
+          <option value="0">Selecione um parceiro...</option>
+          <option value="{{item.idProduto}}" *ngFor="let item of listaParceiros.lista">{{item.idProduto}} - {{item.canal}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <button class="btn btn-primary" (click)="carregarCobranca()" [disabled]="formulario.get('dataInicial').value == null || formulario.get('dataFinal').value == null">Consultar
+          <i class="fa fa-spinner fa-spin" *ngIf="listarCobrancas"></i>
+        </button>
+        <button class="btn btn-primary" (click)="limparDados()">Limpar dados</button>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="alert alert-danger" *ngIf="carregaAviso">
+    {{ mensagemDeErro }}
+  </div>
+
+  <div class="container" *ngIf="carregaGridCobranca" [hidden]="carregaAviso">
+
+    <div class="row button-group">
+      <div class="col-sm-5">
+        <button class="btn btn-primary" (click)="gerarXls()">Baixar excel
+          <span *ngIf="gerandoExcel" class="fa fa-spinner fa-spin"></span>
+        </button>
+      </div>
+      <div class="col-sm-5">
+        <button class="btn btn-primary" (click)="gerarPdf()">Baixar pdf</button>
+      </div>
+    </div>
+
+
+    <div class="table-config">
+      <table class="table" id="cobranca-consolidada">
+        <thead class="sticky" id="myHeader">
+          <tr>
+            <th scope="col" style="text-align: center; padding: 0px 0px 0px 0px;"></th>
+            <th id="columns" class="table-responsive" scope="col" style="text-align: center; padding: 0px 40px 0px 0px;">Data</th>
+            <th id="columns" scope="col" style="text-align: center; padding: 0px 40px 0px 0px">Venda</th>
+            <th id="columns" scope="col" style="text-align: center; padding: 0px 40px 0px 0px">Cancelamento</th>
+            <th id="columns" scope="col" style="text-align: center; padding: 0px 40px 0px 0px">Chargeback</th>
+            <th id="columns" scope="col" style="text-align: center; padding: 0px 40px 0px 0px">Total a receber</th>
+            <th id="columns" scope="col" style="text-align: center; padding: 0px 40px 0px 0px">Total liquidado</th>
+            <th id="columns" scope="col" style="text-align: center; padding: 0px 40px 0px 0px">Pendência</th>
+            <th colspan="2" scope="col" style="text-align: center; padding: 0px 25px 0px 20px;">Ações</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of listaCobrancas.grid; let i = index;">
+          <tr>
+            <td style="text-align: center">
+              <button [disabled]="item.valPendencia == '0'" value="i" (click)="expandirLinha(i, item.descricaoEvento);" class="btn button-padrao">
+                <span class="glyphicon glyphicon-menu-down"></span>
+              </button>
+            </td>
+            <td (mouseenter)="tooltip()" href="#" data-toggle="tooltip" title="Hooray!" id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.dataResposta.substr(8,2)}}/{{item.dataResposta.substr(5,2)}}/{{item.dataResposta.substr(0,4)}}</td>
+            <td id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.valVenda | currency : 'BRL' : 'symbol' : '.2-2'}}</p>
+            </td>
+            <td id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.valCancelamento | currency : 'BRL' : 'symbol' : '.2-2'}}</p>
+            </td>
+            <td id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.valChargeback | currency : 'BRL' : 'symbol' : '.2-2'}}</p>
+            </td>
+            <td id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.valReceberTotal | currency : 'BRL' : 'symbol' : '.2-2'}}</p>
+            </td>
+            <td id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.valTotalLiquid | currency : 'BRL' : 'symbol' : '.2-2'}}</p>
+            </td>
+            <td id="rows">
+              <p style="text-align: right; padding: 0px 40px 0px 0px;">{{item.valPendencia | currency : 'BRL' : 'symbol' : '.2-2'}}</p>
+            </td>
+            <td [hidden]="item.valPendencia == null || item.valPendencia == '0'" *ngIf="item.statusEvento == 'Em análise'" style="text-align: center;" >
+              <button class="btn btn-warning"><span class="
+                glyphicon glyphicon-cog"></span></button>
+            </td>
+            <td [hidden]="item.valPendencia == null || item.valPendencia == '0'" *ngIf="item.statusEvento == 'Concluído'" style="text-align: center">
+              <button class="btn btn-primary">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </td>
+            <td [hidden]="item.valPendencia == null || item.valPendencia == '0'" *ngIf="item.statusEvento == null" style="text-align: center">
+              <button class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+            </td>
+            <td *ngIf="item.valPendencia == '0'"> </td>
+            <td style="text-align: center">
+              <button (click)="consultaDetalhada(item.dataResposta)" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </td>
+          </tr>
+          <tr id="linha" [hidden]="desbloqueiaLinha != i">
+            <td colspan="10" class="edited-box">
+              <div id="internal-edited-box" class="container">
+                <form autocomplete="off" class="form-horizontal" [formGroup]="formCobranca">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <label id="titulo-editor-principal">Edição de cobrança</label>
+                    </div>
+                    <div style="margin-left: 2%;" class="form-group">
+                      <div id="titulo-editor-caixa" class="col-sm-2">
+                        <label id="titulo-editor">Data:</label>
+                        <p id="dadoCampo">{{item.dataEvento == null? ' - ' : item.dataEvento}}</p>
+                      </div>
+
+
+                      <div id="titulo-editor-caixa" class="col-sm-2">
+                        <label id="titulo-editor">Alterado por:</label>
+                        <p id="dadoCampo">{{item.usuarioEvento == null? ' - ' : item.usuarioEvento}}</p>
+                      </div>
+
+
+                      <div id="titulo-editor-caixa" class="col-sm-2">
+                        <label id="titulo-editor">Situação:</label>
+                        <p id="dadoCampo">{{item.statusEvento == null? ' - ' : item.statusEvento}}</p>
+                      </div>
+
+
+                      <div id="titulo-editor-caixa" class="col-sm-2">
+                        <label id="titulo-editor">Data de última alteração:</label>
+                        <p id="dadoCampo">{{item.dataUltimoEvento == null? ' - ' : item.dataUltimoEvento}}</p>
+                      </div>
+
+                      <div style="border-right-style: none;" class="col-sm-2">
+                        <label id="titulo-editor">Status</label>
+                        <select formControlName="status" class="form-control drop">
+                          <option value="null">Selecione uma situação</option>
+                          <option value="C">Concluído</option>
+                          <option value="A">Em análise</option>
+
+                        </select>
+                      </div>
+                    </div>
+
+                    <div style="margin-left: 2%;" class="form-group">
+                      <div class="col-sm-8">
+                        <label id="titulo-editor">Observações</label>
+                        <textarea type="text" class="form-control" placeholder="Digite uma observação" cols="100" rows="5" formControlName="descricao"></textarea>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div style="margin-bottom: 5px;" class="col-sm-3">
+                      <button class="btn btn-primary" [disabled]="formCobranca.get('status').value == null || formCobranca.get('descricao').value == null"
+                        (click)="alterarCobranca(item.dataResposta, formCobranca.get('status').value, formCobranca.get('descricao').value, item.descricaoEvento )">Alterar
+                        <span class="fa fa-spinner fa-spin" *ngIf="alterarEdicao"></span>
+                      </button>
+                      <button class="btn btn-primary" (click)="limparDadosEdicao(item.descricaoEvento)">Limpar Dados</button>
+                      <button class="btn btn-primary" [disabled]="item.dataUltimoEvento == null && item.statusEvento == null && item.dataEvento == null"
+                        (click)="visualizarHistorico(item.dataResposta, item.usuarioEvento, item.dataUltimoEvento)">Visualizar histórico</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mostrarHistorico" class="container">
+  <app-historico-cobranca></app-historico-cobranca>
+  <button style="margin-left: 2%;" class="btn btn-primary" (click)="mostrarHistorico = !mostrarHistorico">Voltar</button>
+</div>

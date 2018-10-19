@@ -1,0 +1,40 @@
+@import 'cores';
+@import 'placeholders';
+
+nav {
+    padding: 0;
+    margin: 0 0 60px;
+
+    ul.pagination {
+        padding: 0;
+        margin: 0;
+
+        li {
+
+            a {
+                border: none;
+                font-size: 1.4em;
+                color: $branco;
+                background-color: $cor-padrao-2;
+
+                &:hover {
+                    background-color: $cor-padrao-1;
+                }
+            }
+
+            &:first-child {
+
+                a {
+                    @extend %border-radius-padrao-4;
+                }
+            }
+            
+            &:last-child {
+
+                a {
+                    @extend %border-radius-padrao-3;
+                }
+            }
+        }
+    }
+}

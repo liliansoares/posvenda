@@ -1,0 +1,3 @@
+@mixin arredondarCantos ($raio-up, $raio-right, $raio-down, $raio-left) {
+    border-radius: $raio-up $raio-right $raio-down $raio-left;
+}

@@ -1,0 +1,16 @@
+<button data-toggle="tooltip" title="Editar Item" *ngIf="hasEditBtn" class="btn" (click)="clickEdit()">
+    <span class="fa  fa-pencil"></span>
+</button>
+<button data-toggle="tooltip" title="Bloquear Item" *ngIf="hasBlockBtn" class="btn" (click)="clickBlock()">
+    <span class="fa "  [ngClass]="{'fa-ban': !element.block , 'fa-check':element.block}"></span>
+</button>
+<button data-toggle="tooltip" title="Deletar item" *ngIf="hasDeleteBtn" class="btn" (click)="clickDelete()" [disabled]="!deleteEnabled">
+    <span class=" fa  fa-trash"  ></span>
+</button>
+<button data-toggle="tooltip" *ngIf="hasbtnAcao1" class="btn btn-default" (click)="clickbtnAcao1()" [disabled]="!acao1Enabled">
+        {{txtBotAcao1}}
+</button>
+
+<button data-toggle="tooltip" *ngIf="hasbtnAcao2" class="btn btn-default" (click)="clickbtnAcao2()" [disabled]="!acao2Enabled">
+        {{txtBotAcao2}}
+</button>

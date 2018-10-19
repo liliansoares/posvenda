@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AACA,AAAA,EAAE,CACF,AAAA,EAAE,CACF,AAAA,EAAE,CACF,AAAA,EAAE,CACF,AAAA,EAAE,AAAC,CACC,KAAK,CC4Be,OAAO,CD3B3B,cAAc,CAAE,SAAS,CACzB,WAAW,CAAE,cAAc,CAC9B,AACD,AAAA,mBAAmB,AAAC,CAChB,MAAM,CAAE,QAAQ,CACnB,AAED,AAAA,UAAU,AAAC,CACP,YAAY,CAAE,GAAG,CACpB",
+    "sources": [
+        "help-box.component.scss",
+        "../../../assets/sass/_cores.scss"
+    ],
+    "names": [],
+    "file": "help-box.component.min.css"
+}

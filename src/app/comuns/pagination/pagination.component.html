@@ -1,0 +1,11 @@
+<div class="pagination">
+    <div class="numbers" style="text-align: center; font-family: Ubuntu;">
+        <button style="border-radius: 1px;" class="link first" (click)="onFirst()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }"> <i class="fa fa-angle-double-left"></i></button>
+        <button class="link prev" (click)="onPrev()" [disabled]="page === 1 || loading" [ngClass]="{ 'disabled': page === 1 || loading }"><i class="fa fa-angle-left"></i> </button>
+ 
+        <button *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)" [ngClass]="{'active': pageNum === page, 'disabled': loading}">{{ pageNum }}</button>
+ 
+        <button class="link next" (click)="onNext(true)" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }"> <i class="fa fa-angle-right"></i></button>
+        <button style="border-radius: 1px;" class="link last" (click)="onLast()" [disabled]="lastPage() || loading" [ngClass]="{ 'disabled': lastPage() || loading }"><i class="fa fa-angle-double-right"></i> </button>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<h1>Histórico - {{data}}</h1>
+
+<div class="container">
+    <div style="    width:50%;font-size:18px;font-variant:all-petite-caps;" class="panel panel-primary">
+            <div class="panel-heading">Informações gerais</div>
+            <div class="panel-body"><p>Esse histórico é referente ao registro de cobrança do dia {{data}}</p></div>
+    </div>
+</div>
+<div *ngIf="!mostraHistorico">
+    <i class="fa fa-spinner fa-spin" ></i>
+</div>
+<div  [hidden]="mostraErro" *ngIf="mostraHistorico" class="container">
+    <table class="table table-reponsive table-hover center-block">
+        <thead>
+            <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Data vencimento</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Data inclusão</th>
+                    <!-- <th scope="col">Data alteração</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listaHistoricoCobranca.lista; let i = index">
+                    <td scope="row">{{i}}</td>
+                    <td>{{item.dataVencimento}}</td>
+                    <td >{{item.obsTrataDiverg}}</td>
+                    <td>{{item.usuario}}</td>
+                    <td>{{item.dataInclusao}}</td>
+                    <!--<td>{{item.dataAlteracao}}</td>-->
+            </tr>
+        </tbody>
+    </table>
+
+    <div [hidden]="!carregaPaginas">
+            <pagination  style="text-align: center; " (goPage)="goToPage($event)" (goNext)="onNext()" (goPrev)="onPrev()" (goFirst)="onFirst()" (goLast)="onLast()"
+              [pagesToShow]="5" [page]="page" [perPage]="limit" [count]="total">
+            </pagination>
+    </div>
+</div>
+
+<div class="alerta container" *ngIf="mostraErro"> {{ mensagemDeErro }}</div>

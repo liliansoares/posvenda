@@ -1,0 +1,43 @@
+@import 'cores';
+
+table {
+    margin: 0 0 30px;
+
+    thead {
+
+        tr {
+            border-bottom: 1px solid $cor-padrao-2;
+
+            th {
+                font-size: 1.2em;
+                font-family: 'ubuntu-regular';
+                font-weight: bold;
+                text-transform: uppercase;
+                color: $cor-padrao-2;
+                border: 0;
+                
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    tbody {
+
+        tr {
+            border: 0;
+
+            td {
+                font-size: 1.4em;
+                font-family: 'ubuntu-regular';
+                color: $cor-cinza-1;
+                border: 0;
+
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}

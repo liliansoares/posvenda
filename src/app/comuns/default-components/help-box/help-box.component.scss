@@ -1,0 +1,17 @@
+@import '../../../assets/sass/cores';
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: $cor-padrao-1;
+    text-transform: uppercase;
+    font-family: 'ubuntu-light';
+}
+.help-box-container {
+    margin: 10px 0px;
+}
+
+.help-icon {
+    margin-right: 5px;
+}

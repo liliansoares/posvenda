@@ -1,0 +1,7 @@
+<div class="form-group">
+	<label  class="control-label" for="inputSuccess">{{label}}</label>   
+		<ng-content></ng-content>
+	<span class="help-block text-danger" >
+		<div *ngIf="hasError()" >{{errorMessage}}</div>
+	</span> 
+</div>

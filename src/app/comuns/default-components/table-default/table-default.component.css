@@ -1,0 +1,153 @@
+body {
+  font-family: 'ubuntu-light';
+}
+
+div.wraper {
+  background-color: #ffffff !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #a25421;
+  text-transform: uppercase;
+  font-family: 'ubuntu-light';
+}
+
+.txt-primary-color {
+  color: #a25421;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 80px;
+}
+
+h2 {
+  font-size: 1.875em;
+  margin-top: 60px;
+}
+
+button,
+.btn {
+  color: #ffffff;
+  background-color: #a25421;
+  border: none;
+}
+
+label,
+.label {
+  font-weight: normal;
+  text-transform: uppercase;
+  color: #a25421;
+  font-size: .75em;
+  font-weight: bold;
+}
+
+.label {
+  display: flex;
+}
+
+.form-group {
+  padding-left: 0 !important;
+}
+
+.form-group.origem p {
+  padding-top: 20px;
+  padding-left: 0;
+}
+
+.form-group.crud {
+  margin-top: 20px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus,
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  background-color: #a25421;
+  border-color: #a25421;
+  color: #ffffff;
+  z-index: 0;
+}
+
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > span,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover {
+  background-color: #b3b3b3;
+  border-color: #b3b3b3;
+  color: #ffffff;
+}
+
+.form-control,
+.form-control:focus {
+  color: #000000;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #a25421;
+  outline: none;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.form-control:focus {
+  border-bottom: 2px solid #a25421;
+}
+
+.table-plataforma {
+  padding-left: 0;
+}
+
+.table-plataforma table > thead > tr > th {
+  font-weight: normal;
+  text-transform: uppercase;
+  color: #a25421;
+  font-size: .75em;
+  font-weight: bold;
+}
+
+.table-plataforma table > thead > tr > th:last-child {
+  text-align: right !important;
+}
+
+.table-plataforma table > tbody {
+  border-top: 1px solid #a25421;
+  border-bottom: 1px solid #a25421;
+}
+
+.table-plataforma table > tbody > tr:hover {
+  background-color: #ededed;
+}
+
+.table-plataforma table > tbody > tr > td {
+  border-top: none;
+}
+
+.table-plataforma table > tbody > tr > td:last-child {
+  text-align: right !important;
+}
+ 
+
+ /*# sourceMappingURL= table-default.component.css.map */

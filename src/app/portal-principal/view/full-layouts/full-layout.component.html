@@ -1,0 +1,63 @@
+<div id="fundo-escuro" (click)="toggleMenu()" ></div>
+<aside class="menu-lateral" id="drawer-menu" >
+	<a href="javascript:;" class="logotipo">
+		<div class="icone">			
+			<img src="../../../assets/svg/icon-financeiro.svg">
+		</div>
+		<div class="tipografia">
+			<img src="../../../assets/img/financeiro.png">
+		</div>
+	</a>
+	<nav class="navigation" id="sortable">
+		<ul class="list-unstyled" *ngFor="let menu of menus; let i = index" id='{{menu.nome}}' >
+			<app-submenu-box [obj]="menu" [index]="i" (onSubitemClicked)="toggleMenu()" ></app-submenu-box>
+		</ul>
+	</nav>
+</aside>
+
+<header class="top-head container-fluid non-printable" style="border-bottom: 2px solid #1F73B6" >
+	<div class="col-xs-12 my-row">
+		<div class="col-xs-2 visible-xs">
+			<h1><i  (click)="toggleMenu()" class="fa fa-bars " style="color: #0063a6;" aria-hidden="true"></i></h1>
+		</div>
+
+		<div class="col-xs-8 col-sm-10">
+			<div class="col-xs-12">
+			</div>	
+		</div>
+
+		<div class="col-xs-2 col-sm-2 usuario topo" >
+			<div class="dropdown text-center">
+				<a class="perfil" data-toggle="dropdown" type="button" style="    width: 185px;
+				margin-left: -120px;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+						<img alt="" style="width: 20%;" src="../../../assets/img/avatar-placeholder.png" class="img-rounded profile-img thumb-sm">
+					
+					<div class="username hidden-xs hidden-sm" style="    font-size: 14px;
+					width: 290px;
+					margin-right: -108px;
+				" > {{ nomeUsu }} </div>
+				</a>
+				
+				<ul id="dropdownMenu1" class="dropdown-menu extended pro-menu fadeInUp animated">
+					<li class="visible-xs visible-sm text-center">
+						<a class="text-center" ><i class="fa fa-user fa-lg"></i> {{ usuario.nome }}</a>
+					</li>			
+					<li>
+						<a (click)="logout()"><i class="fa fa-sign-out fa-lg"></i> Log Out</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</header>
+
+<main class="wraper container-fluid" id="page-wrapper" >
+	<div class="row">
+		<div class="col-xs-12">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</main>
+
+<app-footer-internas></app-footer-internas>

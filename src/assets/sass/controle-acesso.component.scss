@@ -1,0 +1,245 @@
+@import 'cores';
+
+body {
+    font-family: 'ubuntu-light';
+}
+
+div.wraper {
+    background-color: $branco !important;
+}
+
+.txt-primary-color {
+    color: $cor-padrao-1;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+button,
+.btn {
+    color: $branco;
+    background-color: $cor-padrao-1;
+    border: none;
+}
+
+label,
+.label {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: $cor-padrao-1;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.label {
+    display: flex;
+}
+
+.form-group {
+    //remove o padding para que os campos se alinhem a esquerda   
+    padding-left: 0 !important;
+    &.origem p {
+        padding-top: 20px;
+        padding-left: 0;
+    }
+    &.crud {
+        margin-top: 20px;
+    }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    //remove o fundo amarelo do input dos navegadores webkit
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+// PAGINAÇÃO
+.pagination>.active>a,
+.pagination>.active>span,
+.pagination>.active>a:hover,
+.pagination>.active>span:hover,
+.pagination>.active>a:focus,
+.pagination>.active>span:focus,
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    background-color: $cor-padrao-1;
+    border-color: $cor-padrao-1;
+    color: $branco;
+    z-index: 0; //no original, está com z-index:3, o que prejudicava o menu
+}
+
+.pagination>.disabled>a,
+.pagination>.disabled>a:focus,
+.pagination>.disabled>a:hover,
+.pagination>.disabled>span,
+.pagination>.disabled>span:focus,
+.pagination>.disabled>span:hover {
+    background-color: $cor-disable;
+    border-color: $cor-disable;
+    color: $branco;
+}
+
+.form-control,
+.form-control:focus {
+    //sobrescrevendo o estilo de formulário do Bootstrap
+    color: $preto;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid $cor-padrao-1;
+    outline: none;
+    border-radius: 0;
+    padding-left: 0;
+}
+
+.form-control:focus {
+    border-bottom: 2px solid $cor-padrao-1;
+}
+
+.table-plataforma {
+    padding-left: 0;
+    table {
+        >thead>tr>th {
+            font-weight: normal;
+            text-transform: uppercase;
+            color: $cor-padrao-1;
+            font-size: 1em;
+            font-weight: bold;
+            &:last-child {
+                text-align: right !important;
+            }
+        }
+        >tbody {
+            border-top: 1px solid $cor-padrao-1;
+            border-bottom: 1px solid $cor-padrao-1;
+            >tr {
+                &:hover {
+                    background-color: $cor-table-selected;
+                }
+                >td {
+                    border-top: none;
+                    &:last-child {
+                        text-align: right !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+table li {
+    list-style: none;
+}
+.respiro-botoes{
+    margin: 10px 0px;
+}
+.cabecalho th {
+    height: 50px;
+}
+.upper {
+    text-transform: uppercase;
+}
+.table-plataforma table > tbody > tr > td:last-child {
+    text-align: left !important;
+}
+.table-plataforma table > tbody  td {
+    padding-left: 3px;
+}
+
+button.btn:disabled {
+    background: $cor-disable;
+}
+
+.responsive-margin {
+    @media screen and (max-width:991px){
+        margin-top: 30px;
+    }
+}
+.responsive-margin.left {
+    padding-left: 0px;
+    @media screen and (max-width:991px){
+        padding-left: 15px;
+    }
+}
+.responsive-margin.right {
+    padding-right: 0px;
+    @media screen and (max-width:991px){
+        padding-right: 15px;
+    }
+}
+.table-plataforma table>thead>tr>th:last-child {
+    text-align: left !important;
+}
+
+table li {
+    list-style: none;
+}
+.respiro-botoes{
+    margin: 10px 0px;
+}
+.cabecalho th {
+    height: 50px;
+}
+.upper {
+    text-transform: uppercase;
+}
+.table-plataforma table > tbody > tr > td:last-child {
+    text-align: left !important;
+}
+.table-plataforma table > tbody  td {
+    padding-left: 3px;
+}
+.row-resp {
+    @media screen and (max-width:991px) {
+        height: 50px;
+        line-height: 50px;
+    }
+}
+
+
+table {
+    margin: 0 0 30px;
+
+    thead {
+
+        tr {
+            border-bottom: 1px solid $cor-padrao-2;
+
+            th {
+                font-size: 1.2em;
+                font-family: 'ubuntu-regular';
+                font-weight: bold;
+                text-transform: uppercase;
+                color: $cor-padrao-2;
+                border: 0;
+                
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    tbody {
+
+        tr {
+            border: 0;
+
+            td {
+                font-size: 1.4em;
+                font-family: 'ubuntu-regular';
+                color: $cor-cinza-1;
+                border: 0;
+
+                &:last-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}

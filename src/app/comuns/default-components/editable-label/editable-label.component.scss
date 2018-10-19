@@ -1,0 +1,10 @@
+@import '../../../assets/sass/cores';
+
+
+input[disabled] {
+    cursor: default;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    color: $cor-malthus-principal;
+}

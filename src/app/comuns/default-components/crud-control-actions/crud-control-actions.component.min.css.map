@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "crud-control-actions.component.scss"
+    ],
+    "names": [],
+    "file": "crud-control-actions.component.min.css"
+}

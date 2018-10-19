@@ -1,0 +1,86 @@
+.pagination{
+    width:100%;
+    position:relative;
+    flex:1;
+    background:#fff;
+    display:flex;
+    flex-direction:row;
+    align-items:left;
+    font-family:Ubuntu-Regular;
+    font-size:15px;
+    border-radius: 1px;
+    text-align: center;
+}
+.description{
+    position:absolute;
+    top:50%;
+    transform:translate(0, -50%)
+}
+.page-counts{
+    margin-right:50px
+}
+.numbers{
+    display:block;
+    text-align:left;
+    flex:1
+}
+button{
+    flex:0 0 auto;
+    outline:none;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    background-color:#0063A6;
+    color:#fff;
+    padding:10px 15px 10px 15px;
+    max-width:40px;
+    min-width:40px
+}
+button.active{
+    background-color:#1e448a;
+}
+button.prev{
+    margin-right: -5px;
+}
+button.next{
+    margin-left:-3px
+}
+button.disabled{
+    background-color:rgb(114, 140, 196);
+    cursor:not-allowed
+}
+button.first{
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+    margin-right:-3px
+}
+button.last{
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    margin-left:-3px
+}
+@media screen and (max-width: 747px){
+    .pagination{
+        padding-bottom:70px
+    }
+}
+@media screen and (max-width: 427px){
+    button{
+        padding:10px;
+        max-width:30px;
+        min-width:30px
+    }
+}
+@media screen and (max-width: 337px){
+    button{
+        padding:10px;
+        max-width:30px;
+        min-width:30px
+    }
+    button{
+        padding:10px 5px 10px 5px;
+        max-width:25px;
+        min-width:25px
+    }
+}
+ 

@@ -1,0 +1,12 @@
+<div *ngIf="total > 0">
+    <div class="btn btn-group"> 
+        <button class="btn btn-primary"><<<</button>
+        <button class="btn btn-primary"><</button>
+        
+        <button class="btn btn-primary" *ngFor="let item of paginas" (click)="acessarPagina(item, inicio, fim)">{{item}}</button>         
+        
+        <button class="btn btn-primary">></button>
+        <button class="btn btn-primary">>>></button>
+    </div>
+</div>
+

@@ -1,0 +1,184 @@
+@import '../../../assets/sass/cores';
+body {
+    font-family: 'ubuntu-light';
+}
+
+div.wraper {
+    background-color: $branco !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: $cor-malthus-principal;
+    text-transform: uppercase;
+    font-family: 'ubuntu-light';
+}
+
+.txt-primary-color {
+    color: $cor-malthus-principal;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 80px;
+}
+
+h2 {
+   font-size: 1.875em;
+   margin-top: 60px;
+}
+
+div.wraper.container-fluid {
+    //border-bottom: 2px solid $cor-malthus-principal;
+}
+
+button,
+.btn {
+    color: $branco;
+    background-color: $cor-malthus-principal;
+    border: none;
+}
+
+label,
+.label {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: $cor-malthus-principal;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.label {
+    display: flex;
+}
+
+.form-group {
+    //remove o padding para que os campos se alinhem a esquerda   
+    padding-left: 0 !important;
+    &.origem p {
+        padding-top: 20px;
+        padding-left: 0;
+    }
+    &.crud {
+        margin-top: 20px;
+    }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    //remove o fundo amarelo do input dos navegadores webkit
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+// PAGINAÇÃO
+.pagination>.active>a,
+.pagination>.active>span,
+.pagination>.active>a:hover,
+.pagination>.active>span:hover,
+.pagination>.active>a:focus,
+.pagination>.active>span:focus,
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    background-color: $cor-malthus-principal;
+    border-color: $cor-malthus-principal;
+    color: $branco;
+    z-index: 0; //no original, está com z-index:3, o que prejudicava o menu
+}
+
+.pagination>.disabled>a,
+.pagination>.disabled>a:focus,
+.pagination>.disabled>a:hover,
+.pagination>.disabled>span,
+.pagination>.disabled>span:focus,
+.pagination>.disabled>span:hover {
+    background-color: $cor-disable;
+    border-color: $cor-disable;
+    color: $branco;
+}
+
+.form-control,
+.form-control:focus {
+    //sobrescrevendo o estilo de formulário do Bootstrap
+    color: $preto;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid $cor-malthus-principal;
+    outline: none;
+    border-radius: 0;
+    padding-left: 0;
+}
+
+.form-control:focus {
+    border-bottom: 2px solid $cor-malthus-principal;
+}
+
+.table-plataforma {
+    padding-left: 0;
+    table {
+        >thead>tr>th {
+            font-weight: normal;
+            text-transform: uppercase;
+            color: $cor-malthus-principal;
+            font-size: .75em;
+            font-weight: bold;
+            &:last-child {
+                text-align: right !important;
+            }
+            cursor: pointer;
+        }
+        >tbody {
+            border-top: 1px solid $cor-malthus-principal;
+            border-bottom: 1px solid $cor-malthus-principal;
+            >tr {
+                &:hover {
+                    background-color: $cor-table-selected;
+                }
+                >td {
+                    border-top: none;
+                    &:last-child {
+                        text-align: right !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.respiro-altura {
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+
+
+table li {
+    list-style: none;
+}
+.respiro-botoes{
+    margin: 10px 0px;
+}
+.cabecalho th {
+    height: 50px;
+}
+.upper {
+    text-transform: uppercase;
+}
+.table-plataforma table > tbody > tr > td:last-child {
+    text-align: left !important;
+}
+.table-plataforma table > tbody  td {
+    padding-left: 3px;
+}
+
+button.btn:disabled {
+    background: $cor-disable;
+}

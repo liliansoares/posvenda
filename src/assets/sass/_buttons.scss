@@ -1,0 +1,60 @@
+.btn {    
+    @extend %border-radius-padrao-1;
+    border: none;
+    text-transform: uppercase;
+    transition: all 0.5s;
+
+    &.btn-default {
+        color: $branco;
+        background-color: $cor-padrao-2;
+
+        &:hover {
+            background-color: $cor-padrao-1;
+        }
+    }
+    
+    &.btn-link {
+        color: $cor-padrao-2;
+        background-color: rgba($cor-padrao-2, 0);
+
+        &:hover {
+            text-decoration: none;
+            background-color: rgba($cor-padrao-2, 0.1);
+        }
+    }
+    
+    &.btn-label {
+        cursor: default;
+        padding: 6px;
+        text-transform: unset;
+        font-size: 1.2em;
+        line-height: 1em;
+
+        &.tipo-1 {
+            color: $branco;
+            background: $cor-padrao-2;
+        }
+        
+        &.tipo-2 {
+            color: $cor-padrao-2;
+            background: $branco;
+            border: 1px solid $cor-padrao-2;
+        }
+        
+        &.tipo-3 {
+            color: $branco;
+            background: $cor-cinza-1;
+        }
+        
+        &.tipo-4 {
+            color: $cor-cinza-1;
+            background: $branco;
+            border: 1px solid $cor-cinza-1;
+        }
+    }
+
+    &:focus,
+    &:active {
+        outline: none;
+    }
+}

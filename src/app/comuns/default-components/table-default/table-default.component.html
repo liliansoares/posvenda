@@ -1,0 +1,82 @@
+<div class="text-right">
+    <div class="col-md-9 text-left">
+        <div class="row">
+            <h2 class="titulo-form">{{tituloTabela}}</h2>
+        </div>
+            
+    </div>
+    <div class=" col-md-3 pull-right respiro-altura" *ngIf="hasSearch">
+        <div class="row">
+            <i class="fa fa-search " id="icon-search" aria-hidden="true"></i>
+            <input  type="text" class="form-control search-input" id="search" #search  [placeholder]="textoBuscar" (keyup)="onSearch(search.value)" >
+        </div>
+    </div>
+</div>
+<div *ngIf="tableList == null">Nenhum item na lista</div>
+<table id="example" class="table"  *ngIf="tableList"  >
+  <thead>
+      <tr>
+          <!--<th class="border-bottom-default" >#</th>-->
+          <th class="border-bottom-default" *ngFor="let key of tableKeys" (click)="orderBy(key)" >{{key | columnTableName:"=" }}</th>
+          <th class="border-bottom-default" *ngIf="actionsEnable" >Ações</th>
+      </tr>
+  </thead>
+
+  <tbody>
+      <tr *ngFor="let element of listUsed;  let i = index " >
+          <!--<td>{{ atualPage > 0? i+1+atualPage : i+1 }}</td>-->
+          <td *ngFor="let key of tableKeys">{{element[key | columnTableId:"=" ]}}</td>
+          <td>
+               <app-crud-control-actions
+                    [resourceLink]="element['_id']"
+                    [identifierId]="element['_id']"
+                    [deleteEnabled]="element['block']"
+                    [hasEditBtn] = "hasEditBtn"
+                    [hasBlockBtn] = "hasBlockBtn"
+                    [hasDeleteBtn] = "hasDeleteBtn" 
+                    [msgTituloSwal] = "msgTituloSwal"
+                    [msgCorpoSwal] = "msgCorpoSwal"
+                    [element] = "element"
+                    (editClicked)="clickEdit($event)"
+                    (blockClicked)="clickBlock($event)"
+                    (deleteClicked)="clickDelete($event)"
+                    (clickbtnAcao1Clicked)="clickAcao1($event)"
+                    [hasbtnAcao1] = "hasbtnAcao1"
+                    [acao1Enabled] = "acao1Enabled" 
+                    [txtBotAcao1] = "txtBotAcao1"                    
+                    [hasbtnAcao2] = "hasbtnAcao2"
+                    [acao1Enabled] = "acao2Enabled" 
+                    [txtBotAcao2] = "txtBotAcao2"
+                    (clickbtnAcao2Clicked) = "clickAcao2($event)"
+
+              ></app-crud-control-actions> 
+          </td>
+      </tr>
+  </tbody>
+</table>
+
+
+<app-table-paginations
+	[qtdPorPagina]="itensPerPage" 
+    [totalItens]="numeroRegistros"
+    [itens]="tableList"
+	[qtdAdjacentes]="3"
+	(onPaginate)="paginar($event)" >
+</app-table-paginations> 
+
+
+
+<!--
+<nav aria-label="...">
+  <ul class="pagination">
+      <li class="disabled" [class.disabled]="currentPage == 1" ><a href="#" aria-label="Previous"  ><span aria-hidden="true"><<</span></a></li>
+      <li [class.disabled]="!hasPrev" ><a href="#" aria-label="Previous"><span aria-hidden="true"><</span></a></li>
+      <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li [class.disabled]="!hasNext" ><a href="#" aria-label="Next"><span aria-hidden="true">></span></a></li>
+      <li [class.disabled]="currentPage == numberOfPages"><a href="#" aria-label="Next"><span aria-hidden="true">>></span></a></li>
+  </ul>
+</nav> -->

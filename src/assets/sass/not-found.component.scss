@@ -1,0 +1,28 @@
+@import 'cores';
+@import 'fonts';
+@import 'geral';
+
+.btn-primary {
+    padding: 10px;
+}
+.bottom-space {
+    margin-bottom: 20px;
+}
+
+.box-not-found {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+}
+.center {
+    margin: 0 auto;
+}
+
+.margin-20 {
+    margin: 20px 0px;
+}
+
+.btn-primary {
+    background: $cor-padrao-2;
+}

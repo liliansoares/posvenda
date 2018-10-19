@@ -1,0 +1,10 @@
+input[disabled] {
+  cursor: default;
+  background: none;
+  border: none;
+  text-transform: uppercase;
+  color: #a25421;
+}
+ 
+
+ /*# sourceMappingURL= editable-label.component.css.map */

@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$larguraBrnadeja: 300px;
+$larguraIconeModulos: 30px;
+
+html {
+    height: 100%;
+    font-size: 16px;
+}
+
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;    
+    font-size: 62.5%; // Como 16px = 100%, 10px = 62.5%. Fica mais fácil pra trabalhar.
+    font-family: 'ubuntu-regular';
+}
+
+figure {
+	overflow: hidden;
+	line-height: 0; // Ajusta a altura do figure a imagem.
+}
+
+img {
+	max-width: 100%;
+}
+
+a {
+
+    &:hover {
+        text-decoration: none;
+    }
+    
+}
+
+h1,
+h2,
+h3,
+h4 {
+    text-transform: uppercase;
+    color: $cor-padrao-2;
+}
+
+h1 {
+    margin: 0 0 30px;
+    font-size: 3em;
+    font-family: 'ubuntu-light';
+}
+
+h2 {
+    margin: 0 0 25px;
+    font-size: 2.6em;
+    font-family: 'ubuntu-light';
+}
+
+h3 {
+    margin: 0 0 20px;
+    font-size: 2.2em;
+    font-family: 'ubuntu-light';
+}
+
+h4 {
+    margin: 0 0 15px;
+    font-size: 1.8em;
+    font-family: 'ubuntu-light';
+}
+
+ul {
+    list-style: none;
+}
+
+.h2-duplo {
+
+    h2 {
+        margin: 0 0 5px;
+    }
+
+    *:last-child {
+        margin: 0 0 25px;
+    }
+}

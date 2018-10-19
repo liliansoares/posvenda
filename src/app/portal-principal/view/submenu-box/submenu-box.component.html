@@ -1,0 +1,11 @@
+<li   class="" routerLinkActive="open" *ngIf='obj.nome'>
+    <a link-pai href="filho-{{index}}" data-toggle="collapse"  >         
+        <span class="nav-label-icone">{{ obj.nome | slice:0:2}}</span>
+        <span class="nav-label-nome">{{ obj.nome }}</span>
+    </a>
+    <ul id="filho-{{index}}" data-toggle-child="collapse"  class="collapse ">
+        <li *ngFor="let sub of obj.funcionalidades">
+            <a href="/#/posvenda/{{sub.rota}}?chave={{obj.chave}}" (click)="subsecaoSelecionada()">{{ sub.nome }}</a>
+        </li>
+    </ul>
+</li>

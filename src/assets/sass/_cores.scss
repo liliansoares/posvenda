@@ -1,0 +1,24 @@
+$cores-padrao: (
+	#f49b31,
+	#b9672b,
+	#5b341a
+);
+
+$cores-cinza: (
+	#666666,
+	#f2f2f2
+);
+$cor-fundo: #4f3609;
+$cor-padrao-1: nth($cores-padrao, 1);
+$cor-padrao-2: nth($cores-padrao, 2);
+$cor-padrao-3: nth($cores-padrao, 3);
+
+$cor-cinza-1: nth($cores-cinza, 1);
+$cor-cinza-2: nth($cores-cinza, 2);
+
+$cor-disable: #b3b3b3;
+$cor-table-selected: #ededed;
+
+
+$branco: #ffffff;
+$preto: #000000;

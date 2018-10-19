@@ -1,0 +1,133 @@
+form {
+    
+       &.loginForm {
+           .form-group {
+               margin: 0px;
+               
+           }
+       }
+    
+       fieldset {
+           -webkit-margin-start: 0;
+           -webkit-margin-end: 0;
+           -webkit-padding-before: 0;
+           -webkit-padding-start: 0;
+           -webkit-padding-end: 0;
+           -webkit-padding-after: 0;
+           margin: 0 0 60px;
+    
+           legend {
+               margin: 0 0 20px;
+               font-size: 2.0em;
+               line-height: 1.2em;
+               border: none;
+               font-family: 'ubuntu-light';
+               text-transform: uppercase;
+               color: $cor-padrao-2;
+           }
+    
+           .form-group {
+               margin: 0 0 0px;
+    
+               label {
+                   width: 100%;
+                   text-transform: uppercase;
+                   font-family: 'ubuntu-regular';
+                   font-weight: bold;
+                   font-size: 1.2em;
+                   color: $cor-padrao-2;
+               }
+               
+               &.buttons {
+                   display: block;
+                    /*
+                   display: flex;
+                   align-items: flex-end;
+                   flex-grow: 1;
+                   margin: 0; 
+                   */
+                   
+                   .btn {
+                       margin: 0 5px 0 0;
+                   }
+               }
+    
+               .form-control {
+                   background: none;
+                   border: none;
+                   border-radius: 0;
+                   color: $cor-cinza-1;
+                   box-shadow: none;
+    
+                   &.input-type-text {
+                       padding: 0 0 5px;
+                       font-size: 1.4em;
+                       border-bottom: 1px solid rgba($cor-padrao-2, 0.5);
+    
+                       &:focus {
+                           border-bottom: 1px solid rgba($cor-padrao-1, 1);
+                           box-shadow: unset;
+                       }
+    
+                       &[ng-reflect-is-disabled=true] {
+                           border: none;
+                       }
+                   }
+    
+                   &.input-type-password {
+                       padding: 0 0 5px;
+                       font-size: 1.4em;
+                       border-bottom: 1px solid rgba($cor-padrao-2, 0.5);
+                       
+                       &:focus {
+                           border-bottom: 1px solid rgba($cor-padrao-2, 1);
+                           box-shadow: unset;
+                       }
+                   }
+                   
+                   &.input-type-select {
+                       padding: 0 0 5px;
+                       font-size: 1.4em;
+                       border-bottom: 1px solid rgba($cor-padrao-2, 0.5);
+    
+                       &:focus {
+                           border-bottom: 1px solid rgba($cor-padrao-1, 1);
+                           box-shadow: unset;
+                       }
+                   }
+                   
+                   &.input-type-checkbox {
+                       padding: 0 0 5px;
+                       font-size: 1.4em;
+    
+                       input[type=checkbox] {
+                           width: 20px;
+                           height: 20px;
+                       }
+                   }
+               }
+           }
+       }
+   }
+    
+    
+   // RESPONSIVO
+   @media (min-width: 480px) {
+       form {   
+           &.loginForm {
+               .form-group {
+                   &.buttons {
+                       margin: 20px 0 0;
+                   }
+               }
+           }
+       }
+   }
+   // ORGANIZAR O CÓDIGO ABAIXO
+    
+   input[disabled] {
+       cursor: default;
+       background: $cor-cinza-1;
+       border: none;
+       text-transform: uppercase;
+   }
